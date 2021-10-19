@@ -3,10 +3,11 @@ const express = require('express');
 // start an instance of an app.
 const app = express();
 //dependancies
-const bodyParser = require('body-parser');
+let bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({
   extended: false
-}));
+}))
+app.use(bodyParser.json())
 //app.use(bodyParser.json());
 //app.use(cors());
 
@@ -16,7 +17,7 @@ app.use(bodyParser.urlencoded({
 let projectData = {};
 
 // creating the server
-const port = 7000;
+const port = 8080;
 const server = app.listen(port, listening());
 
 // function of the listen() method
@@ -43,33 +44,20 @@ app.get('/all', function(req, res) {
 //post request server side
 app.post('/add', savedData)
 
+
+
+
 function savedData(req, res) {
-  console.log(req.body);
-  newEntry = {
-    date: req.body.date,
-    temp: req.body.temp,
-    content: req.body.content
-  }
-  projectData.push(newEntry);
-  //projectData.date = req.body.date;
-  //projectData.temperature = request.body.temp;
-  //projectData.content = request.body.content;
-  //res.end();
-  //app.route('/add')
-  //.get(function())
+  //console.log(req.body);
+  //console.log(req.body.temp);
+  //console.log(req.body.date);
+  //console.log(req.body.content);
 
-  /// .post(function());
-  console.log(`the data saved is ${projectData}`);
+
+
+projectData["date"] =req.body.date;
+projectData["temp"] =req.body.temp;
+projectData["content"] =req.body.content;
+
+//console.log(`the data saved is ${projectData}`);
 };
-
-//const baseURL = "https://api.openweathermap.org/data/2.5/weather?zip='";
-
-////baseURL + zip + ',eg' + '&APPID=' + key
-//const url = "http://api.openweathermap.org/data/2.5/forecast?id=524901&appid=4d6b21b33101303dc0bab3f05dc200ed";
-//app.get('/' ,function(req , res){
-///request(url ,function(error , response , body){
-///weatherJson= Json.parse(body);
-//console.log(weatherJson);
-//  res.render('weather');
-//  });
-///});
