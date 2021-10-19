@@ -55,9 +55,9 @@ function savedData(req, res) {
 
 
 
-projectData["date"] =req.body.date;
-projectData["temp"] =req.body.temp;
-projectData["content"] =req.body.content;
+  projectData["date"] = req.body.date;
+  projectData["temp"] = req.body.temp;
+  projectData["content"] = req.body.content;
 
-//console.log(`the data saved is ${projectData}`);
+  //console.log(`the data saved is ${projectData}`);
 };
