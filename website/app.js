@@ -19,7 +19,7 @@ function performAction(a) {
   let zip = document.getElementById("zip").value;
   ///  console.log(zip);
   let feeling = document.getElementById("feeling").value;
-  //console.log(feeling);
+  console.log(feeling);
 
   console.log(newDate); // the date
   getTemp(baseURL, zip, key)
@@ -28,34 +28,30 @@ function performAction(a) {
 
       postData('/add', {
 
-          temp: data.main.temp,
-          date: newDate,
-          content: feeling
-        })
-        .then(function() {
-          update();
-        })
+        temp: data.main.temp,
+        date: newDate,
+        content: feeling
+      })
+
+      update();
+
     })
 };
 
 ///`${baseURL}${zip}&appid=${key}`
 let getTemp = async (baseURL, zip, key) => {
   const response = await fetch(baseURL + zip + ',us&appid=' + key) //baseURL + zip + '&appid='+ key)
-  console.log(response); ////the link
+  //console.log(response); ////the link
   try {
     const data = await response.json();
-    console.log(data); ////
+    // console.log(data); ////
     // chain promises
     return data;
   } catch (error) {
     console.log(`sorry an error happened ${error}`);
   }
 };
-const postData = async (url = '/all', data = {
-  date,
-  temp,
-  cont
-}) => {
+const postData = async (url = '', data = {}) => {
   const postRequest = await fetch(url, {
     method: 'POST',
     credentials: 'same-origin',
@@ -67,7 +63,7 @@ const postData = async (url = '/all', data = {
   });
   try {
     const newPost = await postRequest.json();
-    //console.log(newPost);
+    console.log(newPost);
     return newPost;
   } catch (a) {
     console.log(`sorry there is an error occured ${a}`);
@@ -81,6 +77,7 @@ const update = async () => {
     const allData = await request.json();
     document.getElementById('date').innerHTML = allData.date;
     document.getElementById('temp').innerHTML = allData.temp;
+    //console.log(allData.Content);
     document.getElementById('content').innerHTML = allData.Content;
 
   } catch (r) {
