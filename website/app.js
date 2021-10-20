@@ -1,5 +1,5 @@
 // API key and  URL
-const key = "4d6b21b33101303dc0bab3f05dc200ed";
+const key = "4d6b21b33101303dc0bab3f05dc200ed&units=imperial";
 const baseURL = "http://api.openweathermap.org/data/2.5/weather?zip=";
 
 
@@ -14,29 +14,43 @@ let newDate = today.toLocaleString('en-US', {
 document.getElementById("generate").addEventListener('click', performAction);
 
 
+function isValidZipCode(str) {
+  return /^\d{5}(-\d{4})?$/.test(str);
+}
+
+
 
 function performAction(a) {
+
   let zip = document.getElementById("zip").value;
+
+
   ///  console.log(zip);
   let feeling = document.getElementById("feeling").value;
   console.log(feeling);
 
   console.log(newDate); // the date
-  getTemp(baseURL, zip, key)
-    .then(function(data) {
-      console.log(data);
+  if (isValidZipCode(zip)) { /////////////////////////////////////////////
+    getTemp(baseURL, zip, key)
+      .then(function(data) {
+        console.log(data);
 
-      postData('/add', {
+        postData('/add', {
 
-        temp: data.main.temp,
-        date: newDate,
-        content: feeling
+          temp: data.main.temp,
+          date: newDate,
+          content: feeling
+        })
+
+        update();
+
       })
+  } else {
+    console.log(`this not a valid city zip code`)
 
-      update();
 
-    })
-};
+  }
+}
 
 ///`${baseURL}${zip}&appid=${key}`
 let getTemp = async (baseURL, zip, key) => {
@@ -78,7 +92,7 @@ const update = async () => {
     document.getElementById('date').innerHTML = allData.date;
     document.getElementById('temp').innerHTML = allData.temp;
     //console.log(allData.Content);
-    document.getElementById('content').innerHTML = allData.Content;
+    document.getElementById('content').innerHTML = allData.content;
 
   } catch (r) {
     console.log(`An error happened ${r}`);
